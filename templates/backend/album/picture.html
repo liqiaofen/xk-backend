@@ -1,0 +1,112 @@
+{% extends 'backend/home-list.html' %}
+{% load static %}
+{% block cssLink %}
+
+
+{% endblock %}
+
+
+
+{% block tableItem %}
+
+    <div class="row g-2 g-xl-4">
+
+        <!-- item -->
+        {% for image in albumimages %}
+            <div class="col-6 col-lg-3">
+
+                <div class="bg-white shadow-md shadow-3d-hover transition-all-ease-250 transition-hover-top rounded show-hover-container p-2 h-100">
+
+                    <!-- hover buttons : top -->
+                    <div class="position-absolute top-0 end-0 text-align-end z-index-3 m-3 show-hover-item d-none d-sm-inline-block"
+                         style="width:60px">
+
+                        <!-- add to favourite : not logged in -->
+
+
+                        <!-- add to favourite : logged in -->
+                        <a href="#" class="btn-toggle btn bg-white shadow-lg btn-sm rounded-circle mb-2"
+                           data-bs-toggle="tooltip"
+                           data-bs-original-title="add to favourite"
+                           data-bs-placement="left"
+
+                           data-toggle-ajax-url-on="demo.files/php/demo.ajax_request.php?product_id=1&amp;action=add_to_favourite"
+                           data-toast-success-message="Added to your favourite!"
+                           data-toast-success-position="bottom-center">
+                            <i class="fi fi-heart-slim"></i>
+                        </a>
+
+                        <a href="#" class="btn bg-white shadow-lg btn-sm rounded-circle mb-2" title=""
+                           data-bs-toggle="tooltip" data-bs-placement="left" data-bs-original-title="add to compare">
+                            <i class="fi fi-graph"></i>
+                        </a>
+
+                        <a href="#" class="btn btn-danger shadow-lg btn-sm rounded-circle mb-2" title=""
+                           data-bs-toggle="tooltip" data-bs-placement="left" data-bs-original-title="add to cart">
+                            <i class="fi fi-cart-1"></i>
+                        </a>
+                    </div>
+                    <!-- /hover buttons : top -->
+
+
+                    <a href="shop-page-product-2.html" class="d-block text-gray-800">
+
+                        <!--
+
+                          3 ways to set the image
+
+                        -->
+
+                        <!-- 1. without .bg-suprime - use image as it is -->
+                        <!--
+                        <figure class="text-center rounded-top overflow-hidden">
+                          <img class="img-fluid" src="image.jpg" alt="...">
+                        </figure>
+                        -->
+
+
+                        <!-- 2. squared, as background -->
+                        <!--
+                        <figure class="text-center rounded-top overflow-hidden bg-cover" style="background-image:url('image.jpg')">
+                          <img class="w-100" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="...">
+                        </figure>
+                        -->
+
+                        <!-- 3. with .bg-suprime (remove white bg and add a gray bg) -->
+                        <figure class="text-center bg-gradient-radial-light rounded-top overflow-hidden">
+                            <img class="img-fluid bg-suprime opacity-9" src="https://picsum.photos/id/237/300/200"
+                                 alt="...">
+                        </figure>
+
+                        <span class="d-block fs-6 p-2">
+
+              <!-- rating -->
+              <span class="d-block smaller text-muted">
+                <i class="rating-4 smaller text-warning"></i> (4.7)
+              </span>
+
+                            <!-- title -->
+              <span class="d-block fw-medium">Lorem ipsum dolor sit amet</span>
+
+                            <!-- price -->
+              <span class="d-block fw-medium">
+                <del class="text-muted">$112.00</del> 
+                <span class="text-dark">$99.00</span>
+              </span>
+            </span>
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+        <!-- /item -->
+    </div>
+    <!-- /product list -->
+{% endblock %}
+{% block selectedItems %}
+
+{% endblock %}
+
+{% block javaScripts %}
+    {{ block.super }}
+
+{% endblock %}

@@ -1,0 +1,349 @@
+{% extends 'frontend/base.html' %}
+
+{% load static %}
+{% block Link %}
+    <link rel="stylesheet" href="{% static 'editormd/css/editormd.css' %}"/>
+
+{% endblock %}
+{% block Container %}
+    <!-- PAGE TITLE -->
+    <div class="container py-5">
+
+        <h1 class="h2 fw-bold">My account</h1>
+
+        <!--
+            <ul class="list-inline small text-muted m-0">
+              <li class="list-inline-item">
+                <a href="account-orders.html" class="d-flex align-items-center link-muted">
+                  <svg width="18px" height="18px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+                    <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"></path>
+                  </svg>
+                  <span class="text-muted px-1">back to orders</span>
+                </a>
+              </li>
+            </ul>
+        -->
+
+    </div>
+    <!-- /PAGE TITLE -->
+
+    <!-- -->
+    <div class="container">
+
+        <div class="row g-4">
+
+            <!-- sidebar -->
+            <div class="col-12 col-lg-3">
+
+                <nav class="sticky-kit nav-deep nav-deep-light">
+
+                    <div class="card">
+                        <div class="card-body p-0 p-md-4">
+
+                            <!-- 手机端 -->
+                            <button class="clearfix btn btn-toggle btn-sm w-100 text-align-left shadow-md border rounded d-block d-lg-none"
+                                    data-bs-target="#nav_responsive"
+                                    data-toggle-container-class="d-none d-sm-block bg-white shadow-md border animate-fadein rounded p-3">
+										<span class="group-icon px-2 py-2 float-start">
+											<i class="fi fi-bars-2"></i>
+											<i class="fi fi-close"></i>
+										</span>
+
+                                <span class="h5 py-2 m-0 float-start">
+											菜单
+										</span>
+                            </button>
+
+
+                            <!-- navbar : navigation -->
+                            <ul id="nav_responsive" class="nav flex-column d-none d-lg-block mt-1 mt-lg-0">
+                                <li><!-- account name -->
+                                    <div class="d-flex align-items-center mb-2 pb-4 border-bottom">
+                                        <div class="flex-none p-3 border rounded-circle">
+                                            <svg class="text-gray-300" width="34px" height="34px"
+                                                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460.8 460.8"
+                                                 fill="currentColor">
+                                                <path d="M230.432,0c-65.829,0-119.641,53.812-119.641,119.641s53.812,119.641,119.641,119.641s119.641-53.812,119.641-119.641S296.261,0,230.432,0z"></path>
+                                                <path d="M435.755,334.89c-3.135-7.837-7.314-15.151-12.016-21.943c-24.033-35.527-61.126-59.037-102.922-64.784c-5.224-0.522-10.971,0.522-15.151,3.657c-21.943,16.196-48.065,24.555-75.233,24.555s-53.29-8.359-75.233-24.555c-4.18-3.135-9.927-4.702-15.151-3.657c-41.796,5.747-79.412,29.257-102.922,64.784c-4.702,6.792-8.882,14.629-12.016,21.943c-1.567,3.135-1.045,6.792,0.522,9.927c4.18,7.314,9.404,14.629,14.106,20.898c7.314,9.927,15.151,18.808,24.033,27.167c7.314,7.314,15.673,14.106,24.033,20.898c41.273,30.825,90.906,47.02,142.106,47.02s100.833-16.196,142.106-47.02c8.359-6.269,16.718-13.584,24.033-20.898c8.359-8.359,16.718-17.241,24.033-27.167c5.224-6.792,9.927-13.584,14.106-20.898C436.8,341.682,437.322,338.024,435.755,334.89z"></path>
+                                            </svg>
+                                        </div>
+                                        <div class="w-100 px-3">
+                                            <span>Hello,</span>
+                                            <span class="d-block fw-bold">刘鹏飞</span>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link px-0 d-flex align-items-center">
+                                        <svg class="text-gray-600 float-start" width="18px" height="18px"
+                                             viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+                                            <path fill-rule="evenodd"
+                                                  d="M.102 2.223A3.004 3.004 0 0 0 3.78 5.897l6.341 6.252A3.003 3.003 0 0 0 13 16a3 3 0 1 0-.851-5.878L5.897 3.781A3.004 3.004 0 0 0 2.223.1l2.141 2.142L4 4l-1.757.364L.102 2.223zm13.37 9.019L13 11l-.471.242-.529.026-.287.445-.445.287-.026.529L11 13l.242.471.026.529.445.287.287.445.529.026L13 15l.471-.242.529-.026.287-.445.445-.287.026-.529L15 13l-.242-.471-.026-.529-.445-.287-.287-.445-.529-.026z"></path>
+                                        </svg>
+                                        <span>账号设置</span>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item active">
+                                    <a class="nav-link px-0 d-flex align-items-center" href="#">
+												<span class="group-icon">
+													<i class="fi fi-arrow-end fs-6 text-gray-600"></i>
+													<i class="fi fi-arrow-down fs-6 text-gray-600"></i>
+												</span>
+
+                                        <span class="px-2 d-inline-block">
+													文章列表
+												</span>
+                                    </a>
+
+                                    <ul class="nav flex-column px-3">
+                                        <li class="nav-item">
+                                            <a class="nav-link px-0 d-flex align-items-center">
+                                                <svg width="18px" height="18px" xmlns="http://www.w3.org/2000/svg"
+                                                     fill="currentColor" class="bi bi-folder-plus" viewBox="0 0 16 16">
+                                                    <path d="m.5 3 .04.87a1.99 1.99 0 0 0-.342 1.311l.637 7A2 2 0 0 0 2.826 14H9v-1H2.826a1 1 0 0 1-.995-.91l-.637-7A1 1 0 0 1 2.19 4h11.62a1 1 0 0 1 .996 1.09L14.54 8h1.005l.256-2.819A2 2 0 0 0 13.81 3H9.828a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 6.172 1H2.5a2 2 0 0 0-2 2zm5.672-1a1 1 0 0 1 .707.293L7.586 3H2.19c-.24 0-.47.042-.683.12L1.5 2.98a1 1 0 0 1 1-.98h3.672z"></path>
+                                                    <path d="M13.5 10a.5.5 0 0 1 .5.5V12h1.5a.5.5 0 1 1 0 1H14v1.5a.5.5 0 1 1-1 0V13h-1.5a.5.5 0 0 1 0-1H13v-1.5a.5.5 0 0 1 .5-.5z"></path>
+                                                </svg>
+                                                <span class="px-2 ">新建文件夹</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link px-0 d-flex align-items-center" href="#">
+                                                <svg width="18px" height="18px" xmlns="http://www.w3.org/2000/svg"
+                                                     fill="currentColor" class="bi bi-folder-fill" viewBox="0 0 16 16">
+                                                    <path d="M9.828 3h3.982a2 2 0 0 1 1.992 2.181l-.637 7A2 2 0 0 1 13.174 14H2.825a2 2 0 0 1-1.991-1.819l-.637-7a1.99 1.99 0 0 1 .342-1.31L.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3zm-8.322.12C1.72 3.042 1.95 3 2.19 3h5.396l-.707-.707A1 1 0 0 0 6.172 2H2.5a1 1 0 0 0-1 .981l.006.139z"></path>
+                                                </svg>
+                                                <span class="px-2 ">Django</span>
+                                            </a>
+                                            <ul class="nav flex-column px-3">
+                                                <li class="nav-item">
+                                                    <a class="nav-link px-0 d-flex align-items-center">
+                                                        <svg width="18px" height="18px"
+                                                             xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                                             class="bi bi-file-earmark-plus" viewBox="0 0 16 16">
+                                                            <path d="M8 6.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 .5-.5z"></path>
+                                                            <path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h-2z"></path>
+                                                        </svg>
+                                                        <span class="px-2 ">新建文件</span>
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link px-0 d-flex align-items-center">
+                                                        <svg width="18px" height="18px"
+                                                             xmlns="http://www.w3.org/2000/svg"
+                                                             fill="currentColor" class="bi bi-file-earmark-text"
+                                                             viewBox="0 0 16 16">
+                                                            <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z"></path>
+                                                            <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5L9.5 0zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"></path>
+                                                        </svg>
+                                                        <span class="px-2 ">应用数据模型</span>
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link px-0 d-flex align-items-center">
+                                                        <svg width="18px" height="18px"
+                                                             xmlns="http://www.w3.org/2000/svg"
+                                                             fill="currentColor" class="bi bi-file-earmark-text"
+                                                             viewBox="0 0 16 16">
+                                                            <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z"></path>
+                                                            <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5L9.5 0zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"></path>
+                                                        </svg>
+                                                        <span class="px-2 ">享用便捷的API</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link px-0 d-flex align-items-center">
+                                                <svg width="18px" height="18px" xmlns="http://www.w3.org/2000/svg"
+                                                     fill="currentColor" class="bi bi-folder" viewBox="0 0 16 16">
+                                                    <path d="M.54 3.87.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3h3.982a2 2 0 0 1 1.992 2.181l-.637 7A2 2 0 0 1 13.174 14H2.826a2 2 0 0 1-1.991-1.819l-.637-7a1.99 1.99 0 0 1 .342-1.31zM2.19 4a1 1 0 0 0-.996 1.09l.637 7a1 1 0 0 0 .995.91h10.348a1 1 0 0 0 .995-.91l.637-7A1 1 0 0 0 13.81 4H2.19zm4.69-1.707A1 1 0 0 0 6.172 2H2.5a1 1 0 0 0-1 .981l.006.139C1.72 3.042 1.95 3 2.19 3h5.396l-.707-.707z"></path>
+                                                </svg>
+                                                <span class="px-2 ">Docker</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+
+                                </li>
+
+                                <li class="nav-item border-top my-3"></li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link px-0" href="#">
+                                        <i class="fi fi-power float-start"></i>
+                                        Log Out
+                                    </a>
+                                </li>
+
+                            </ul>
+
+                        </div>
+                    </div>
+
+                </nav>
+
+            </div>
+
+            <!-- content -->
+            <div class="col-12 col-lg-9">
+                <form id="article-form">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="form-floating mb-3">
+                                <input required placeholder="标题" id="article-title" name="title" type="text"
+                                       class="form-control">
+                                <label for="account_email">标题</label>
+                            </div>
+                            <div id="test-editor">
+                                <textarea name="content" id="article-content" style="">### 关于 Editor.md
+**Editor.md** 是一款开源的、可嵌入的 Markdown 在线编辑器（组件），基于 CodeMirror、jQuery 和 Marked 构建。</textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="bottom_btn_top" class="card">
+                        <div class="card-body mb-8">
+                            <p>封面和摘要</p>
+                            <div class="row">
+                                <div class="col-2">
+                                    <label style="width:120px;"
+                                           class="rounded text-center position-relative d-inline-block cursor-pointer border border-secondary border-dashed bg-white">
+                                        <!-- remove button -->
+                                        <a href="#"
+                                           class="js-file-upload-avatar-squared-remove hide position-absolute absolute-top text-align-start w-100 z-index-3">
+                                        <span class="d-inline-block btn btn-sm bg-secondary text-white py-1 px-2 m-1"
+                                              title="remove avatar" data-tooltip="tooltip">
+                                          <i class="fi fi-close m-0"></i>
+                                        </span>
+                                        </a>
+
+                                        <span class="z-index-2 js-file-input-avatar-squared-container d-block absolute-full z-index-1 hide-empty">
+                                        <!-- avatar container -->
+                                    </span>
+
+                                        <!-- hidden input (out of viewport, or safari will ignore it) -->
+                                        <input type="file" name="name_avatar_static_squared"
+                                               data-file-ext="jpg, png, gif"
+                                               data-file-max-size-kb-per-file="11500"
+                                               data-file-ext-err-msg="Allowed:"
+                                               data-file-size-err-item-msg="File too large!"
+                                               data-file-size-err-total-msg="Total allowed size exceeded!"
+                                               data-file-toast-position="bottom-center"
+                                               data-file-preview-container=".js-file-input-avatar-squared-container"
+                                               data-file-preview-show-info="false"
+                                               data-file-preview-class="m-0 p-0 rounded animate-bouncein"
+                                               data-file-preview-img-height="120"
+                                               data-file-btn-clear="a.js-file-upload-avatar-squared-remove"
+                                               data-file-preview-img-cover="true"
+                                               class="custom-file-input absolute-full">
+
+                                        <svg class="fill-gray-600 m-4 z-index-0" viewBox="0 0 60 60">
+                                            <path d="M41.014,45.389l-9.553-4.776C30.56,40.162,30,39.256,30,38.248v-3.381c0.229-0.28,0.47-0.599,0.719-0.951c1.239-1.75,2.232-3.698,2.954-5.799C35.084,27.47,36,26.075,36,24.5v-4c0-0.963-0.36-1.896-1-2.625v-5.319c0.056-0.55,0.276-3.824-2.092-6.525C30.854,3.688,27.521,2.5,23,2.5s-7.854,1.188-9.908,3.53c-2.368,2.701-2.148,5.976-2.092,6.525v5.319c-0.64,0.729-1,1.662-1,2.625v4c0,1.217,0.553,2.352,1.497,3.109c0.916,3.627,2.833,6.36,3.503,7.237v3.309c0,0.968-0.528,1.856-1.377,2.32l-8.921,4.866C1.801,46.924,0,49.958,0,53.262V57.5h46v-4.043C46,50.018,44.089,46.927,41.014,45.389z"/>
+                                            <path d="M55.467,46.526l-9.723-4.21c-0.23-0.115-0.485-0.396-0.704-0.771l6.525-0.005c0,0,0.377,0.037,0.962,0.037c1.073,0,2.638-0.122,4-0.707c0.817-0.352,1.425-1.047,1.669-1.907c0.246-0.868,0.09-1.787-0.426-2.523c-1.865-2.654-6.218-9.589-6.354-16.623c-0.003-0.121-0.397-12.083-12.21-12.18c-1.187,0.01-2.309,0.156-3.372,0.413c0.792,2.094,0.719,3.968,0.665,4.576v4.733c0.648,0.922,1,2.017,1,3.141v4c0,1.907-1.004,3.672-2.607,4.662c-0.748,2.022-1.738,3.911-2.949,5.621c-0.15,0.213-0.298,0.414-0.443,0.604v2.86c0,0.442,0.236,0.825,0.631,1.022l9.553,4.776c3.587,1.794,5.815,5.399,5.815,9.41V57.5H60v-3.697C60,50.711,58.282,47.933,55.467,46.526z"/>
+                                        </svg>
+
+                                    </label>
+                                </div>
+                                <div class="col-9">
+                                    <div class="form-floating mb-3">
+                                <textarea required placeholder="Message" id="contact_message" name="contact_message"
+                                          class="form-control" rows="3" style="min-height:120px"></textarea>
+                                        <label for="contact_message">选填</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <a class="px-0" style="vertical-align:middle;" data-bs-toggle="modal"
+                               data-bs-target="#modalCentered" type="button">
+                                话题标签
+                                <svg width="18px" height="18px" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                     class="bi bi-chevron-right" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd"
+                                          d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"></path>
+                                </svg>
+                                <a style="vertical-align: middle;" class="text-gray-600">#Django,#Docker</a>
+                            </a>
+                            <!-- Modal -->
+                            <div class="modal fade" id="modalCentered" data-bs-keyboard="false" tabindex="-1"
+                                 aria-labelledby="modalCenteredLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="modalCenteredLabel">话题标签</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body px-4">
+                                            <p>每篇文章最多添加5个话题</p>
+                                            <div class="form-floating mb-3">
+                                                <input required placeholder="标题" id="account_email" name="account_email"
+                                                       type="email"
+                                                       class="form-control">
+                                                <label for="account_email">多个话题之间使用空格分开</label>
+                                            </div>
+                                            <p>最近话题</p>
+                                            <div>
+                                                <span class="badge bg-secondary-soft p-xl-2">#Primary</span>
+                                                <span class="badge bg-secondary-soft p-xl-2">#Primary</span>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary">确定</button>
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                取消
+                                            </button>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="bottom_btn" class="card" style="position: fixed;bottom: 0; z-index: 11;">
+                        <div class="card-body text-end" style="padding: 5px;">
+                            <button type="button" class="btn btn-primary transition-hover-top mb-1 saveDraft">保存草稿
+                            </button>
+                            <button id="publish_btn" type="button" class="btn btn-primary transition-hover-top mb-1">发布
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+    <!-- / -->
+{% endblock %}
+
+{% block Footer %}
+
+{% endblock %}
+
+{% block Script %}
+    {{ block.super }}
+    <script src="{% static 'editormd/js/editormd.js' %}"></script>
+    <script type="text/javascript">
+
+        $(function () {
+            var editor = editormd("test-editor", {
+                width: "100%",
+                height: "600px",
+                path: "{% static 'editormd/js/lib/' %}"
+            });
+
+            $('#bottom_btn').width($('#bottom_btn_top').width());
+            {#窗口变化时#}
+            $(window).resize(function () {
+                $('#bottom_btn').width($('#bottom_btn_top').width());
+            });
+
+
+            $('#publish_btn').click(function () {
+                {#console.log('editor.getMarkdown()', editor.getMarkdown())#}
+                let formdata = new FormData($('#article-form')[0])
+                console.log(formdata.get('title'))
+                console.log(formdata.get('content'))
+            })
+
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,27 @@
+version: "3.7"
+
+services:
+  backend:
+    depends_on:
+      #      - redis
+      - db
+
+  db:
+    image: bitnami/postgresql:latest
+    environment:
+      - POSTGRESQL_PASSWORD=liu*963.
+      - POSTGRESQL_DATABASE=xueke
+    volumes:
+      - pg_data:/bitnami/postgresql
+
+#  redis:
+
+#    image: bitnami/redis
+#    environment:
+#      - ALLOW_EMPTY_PASSWORD=yes
+#    volumes:
+#      - redis_data:/bitnami/redis/data
+
+volumes:
+  #  redis_data:
+  pg_data:

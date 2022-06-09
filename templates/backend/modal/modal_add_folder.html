@@ -1,0 +1,66 @@
+<div class="modal fade" id="modalAddFoler" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalCenteredLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalCenteredLabel">新建文件夹</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-0 m-5 m-4-xs">
+
+                <div class="accordion">
+                    <form class="collapse bs-validate show" id="folder-form">
+
+                        <div class="form-floating mb-3">
+                            <input
+                                    type="text" class="form-control" name="parent"
+                                    id="folder-parent" value="{{ current_path }}">
+                            <label for="">路径</label>
+                            <div class="invalid-feedback" id="folder-parent-err">
+                            </div>
+                        </div>
+                        <div class="form-floating">
+                            <input data-rule='required:true|maxlength:10'
+                                   type="text" class="form-control" placeholder=" "
+                                   id="folder-name" value="" name="name">
+                            <label for="">新文件名</label>
+                            <div class="invalid-feedback" id="folder-name-err">
+                            </div>
+                        </div>
+                    </form>
+                    <!-- /sign in -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" onclick="submitAddFolder()" class="btn btn-primary">确认</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function submitAddFolder() {
+        if (!ajax_validate('folder')) {
+            return
+        }
+        var forms = document.getElementById('folder-form')
+        var formData = new FormData(forms);
+        $.ajax({
+            url: "{% url 'api-articles:article-folder-list' %}",
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (res) {
+                $.SOW.core.toast.show('success', '', '新建成功', 'top-center', 10000, true);
+                $('#modalAddFoler').modal('hide') // 隐藏model
+                forms.reset()
+                var url = '{% url 'article:article' %}'
+                window.location.href = `${url}?path=${res.data.path}` // 跳转
+            },
+            error: function (jqXHR) {
+                ajax_error(jqXHR, 'folder')
+            }
+        })
+    }
+</script>

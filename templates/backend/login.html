@@ -1,0 +1,129 @@
+{% extends 'backend/base.html' %}
+{% load i18n %}
+
+{% load static %}
+{% block wrapper %}
+    <div class="wrapper">
+        <div class="row g-0 bg-white min-vh-100 align-items-center">
+            <div class="col-lg-6  text-lg-start overflow-hidden z-index-2">
+                <div class="px-3 py-6">
+
+                    <div class="row">
+                        <div class="col-sm-8 col-md-6 col-lg-9 col-xl-12 mx-auto max-w-450">
+
+                            <h1 class="fw-bold mb-5">{% translate "登录" %}</h1>
+
+                            <form id="login-form">
+                                <!-- email address -->
+                                {% csrf_token %}
+                                <div class="form-floating mb-3">
+                                    <input data-rule='required:true|regular:"email"'
+                                           type="email" class="form-control" placeholder="Email address"
+                                           id="login-username" value="2385512991@qq.com" name="username">
+                                    <label for="account_email">邮箱</label>
+                                    <div class="invalid-feedback" id="login-username-err">
+                                    </div>
+                                </div>
+                                <!-- password -->
+                                <div class="input-group-over">
+                                    <div class="form-floating mb-3">
+                                        <input placeholder="Password" id="login-password" type="password" value="admin"
+                                               name="password" class="form-control" data-rule="required:true">
+                                        <label for="account_password">密码</label>
+                                        <div class="invalid-feedback" id="login-password-err">
+                                        </div>
+                                    </div>
+                                    <!-- `SOW : Form Advanced` plugin used -->
+                                    <a href="#" class="btn smaller btn-password-type-toggle"
+                                       data-target="#account_password">
+                                  <span class="group-icon">
+                                    <i class="fi fi-eye m-0"></i>
+                                    <i class="fi fi-close m-0"></i>
+                                  </span>
+                                    </a>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" id="contact_gdpr" name="contact_gdpr"
+                                               type="checkbox" value="1">
+                                        <label class="form-check-label" for="contact_gdpr">
+                                            记住我
+                                        </label>
+                                    </div>
+                                </div>
+                                <!-- submot button -->
+                                <div class="d-grid mb-3">
+                                    <button type="button" id="login-submit" class="btn btn-primary">
+                                        <span>登录</span>
+                                        <svg class="rtl-flip" width="18px" height="18px" viewBox="0 0 16 16"
+                                             xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+                                            <path fill-rule="evenodd"
+                                                  d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </form>
+                            <!-- create account -->
+                            <div class="text-center mt-4">
+                                <a href="{% url 'signup' %}" class="link-muted">
+                                    还没有账号？
+                                </a>
+                                <a href="" class="link-muted">
+                                    忘记密码？
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-none d-lg-block min-vh-100 col-lg-6 bg-cover py-8 overlay-dark overlay-opacity-25"
+                 style="background-image:url({% static 'smarty/images/login.jpg' %})">
+                <svg class="d-none d-lg-block position-absolute h-100 top-0 text-white ms-n5" style="width:6rem"
+                     fill="currentColor" viewBox="0 0 100 100" preserveAspectRatio="none">
+                    <polygon points="50,0 100,0 50,100 0,100"></polygon>
+                </svg>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javaScripts %}
+    {{ block.super }}
+    <script src="{% static 'js/form_validate.js' %}"></script>
+    <script>
+
+        $('#login-submit').on('click', function (e) {
+            const cur_form_inputs = $('[data-rule][id^=login-]')
+            cur_form_inputs.trigger('blur')
+            let flag = Input.input_validate(cur_form_inputs)
+            if (flag) {
+                var forms = document.getElementById('login-form')
+                var formData = new FormData(forms);
+                $.ajax({
+                    url: "{% url 'backend-login' %}",
+                    type: "POST",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (res) {
+                        console.log(res)
+                        if (res.status) {
+                            localStorage.access = res.data.access;
+                            window.location.href = {% url 'backend-index' %};
+                        } else {
+                            var $input = $('#login-username');
+                            $input.removeClass("is-valid");
+                            $input.addClass("is-invalid");  // 必须要增加这个类才能显示错误信息
+                            $('#login-username-err').text(res.errors.username[0])
+                            {#ajax_error(res)#}
+                        }
+                    }
+                })
+            }
+
+        })
+
+    </script>
+
+{% endblock %}
+

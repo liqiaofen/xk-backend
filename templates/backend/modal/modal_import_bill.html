@@ -1,0 +1,62 @@
+<div class="modal fade" id="modalImportBill" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalCenteredLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalCenteredLabel">导入账单</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-0 m-5 m-4-xs">
+
+                <div class="accordion">
+                    <form class="collapse bs-validate show" id="import-bill-form">
+                        <div class="input-group-over mb-3">
+                            <select class="js-ajax form-select" name="method" data-ajax-target="#county_list">
+                                <option value="alipay">支付宝</option>
+                                <option value="wechat">微信</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <input type="file" name="file"
+                                   data-file-ext="xlsx, xls, csv"
+                                   data-file-max-size-kb-per-file="30000"
+                                   data-file-ext-err-msg="允许的文件格式:"
+                                   data-file-size-err-item-msg="File too large!"
+                                   data-file-size-err-total-msg="Total allowed size exceeded!"
+                                   data-file-toast-position="bottom-center"
+                                   class="form-control">
+                        </div>
+                    </form>
+                    <!-- /sign in -->
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" onclick="importBill()" class="btn btn-primary">确认</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function importBill() {
+        var forms = document.getElementById('import-bill-form')
+        var formData = new FormData(forms);
+        $.ajax({
+            url: "{% url 'api-expense:expense-import-bill' %}",
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (res) {
+                $.SOW.core.toast.show('success', '', '导入成功', 'top-center', 10000, true);
+                $('#modalImportBill').modal('hide') // 隐藏model
+                forms.reset()
+                location.reload() // 刷新当前页面
+            },
+            error: function (jqXHR) {
+                ajax_error(jqXHR, 'paycategory')
+            }
+        })
+    }
+</script>

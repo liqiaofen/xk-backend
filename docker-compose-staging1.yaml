@@ -1,0 +1,75 @@
+version: '3.8'
+
+services:
+  web:
+    build:
+      context: ./app
+      dockerfile: Dockerfile.prod
+    command: gunicorn hello_django.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - static_volume:/home/app/web/staticfiles
+      - media_volume:/home/app/web/mediafiles
+    expose:
+      - 8000
+    env_file:
+      DEBUG=0
+      SECRET_KEY=change_me
+      DJANGO_ALLOWED_HOSTS=<YOUR_DOMAIN.COM>
+      SQL_ENGINE=django.db.backends.postgresql
+      SQL_DATABASE=hello_django_prod
+      SQL_USER=hello_django
+      SQL_PASSWORD=hello_django
+      SQL_HOST=db
+      SQL_PORT=5432
+      DATABASE=postgres
+      VIRTUAL_HOST=<YOUR_DOMAIN.COM>
+      VIRTUAL_PORT=8000
+      LETSENCRYPT_HOST=<YOUR_DOMAIN.COM>
+    depends_on:
+      - db
+  db:
+    image: postgres:13.0-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    env_file:
+      POSTGRES_USER=hello_django
+      POSTGRES_PASSWORD=hello_django
+      POSTGRES_DB=hello_django_prod
+  nginx-proxy:
+    container_name: nginx-proxy
+    build: nginx
+    restart: always
+    ports:
+      - 443:443
+      - 80:80
+    volumes:
+      - static_volume:/home/app/web/staticfiles
+      - media_volume:/home/app/web/mediafiles
+      - certs:/etc/nginx/certs
+      - html:/usr/share/nginx/html
+      - vhost:/etc/nginx/vhost.d
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    depends_on:
+      - web
+  nginx-proxy-letsencrypt:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    env_file:
+      DEFAULT_EMAIL=youremail@yourdomain.com
+      NGINX_PROXY_CONTAINER=nginx-proxy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - certs:/etc/nginx/certs
+      - html:/usr/share/nginx/html
+      - vhost:/etc/nginx/vhost.d
+      - acme:/etc/acme.sh
+    depends_on:
+      - nginx-proxy
+
+volumes:
+  postgres_data:
+  static_volume:
+  media_volume:
+  certs:
+  html:
+  vhost:
+  acme:

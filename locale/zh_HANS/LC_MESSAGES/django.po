@@ -1,0 +1,81 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-05-11 20:29+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: apps/articles/models.py:35
+msgid "文章图片"
+msgstr ""
+
+#: apps/practice/models.py:32
+msgid "username"
+msgstr ""
+
+#: apps/practice/models.py:35
+msgid "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."
+msgstr ""
+
+#: apps/practice/models.py:38
+msgid "A user with that username already exists."
+msgstr ""
+
+#: apps/practice/models.py:41
+msgid "first name"
+msgstr ""
+
+#: apps/practice/models.py:42
+msgid "last name"
+msgstr ""
+
+#: apps/practice/models.py:43
+msgid "email address"
+msgstr ""
+
+#: apps/practice/models.py:45
+msgid "staff status"
+msgstr ""
+
+#: apps/practice/models.py:47
+msgid "Designates whether the user can log into this admin site."
+msgstr ""
+
+#: apps/practice/models.py:50
+msgid "active"
+msgstr ""
+
+#: apps/practice/models.py:53
+msgid ""
+"Designates whether this user should be treated as active. Unselect this "
+"instead of deleting accounts."
+msgstr ""
+
+#: apps/practice/models.py:57
+msgid "date joined"
+msgstr ""
+
+#: apps/practice/models.py:65
+msgid "user"
+msgstr ""
+
+#: apps/practice/models.py:66
+msgid "users"
+msgstr ""
+
+#: templates/backend/login.html:15
+msgid "登录"
+msgstr "Login"

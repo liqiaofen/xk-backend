@@ -1,0 +1,122 @@
+{% extends 'frontend/base.html' %}
+
+{% load static %}
+{% block Header %}
+
+{% endblock %}
+{% block Container %}
+    <div class="row g-0 bg-white min-vh-100 align-items-center">
+        <div class="col-lg-6 text-center text-lg-start overflow-hidden z-index-2">
+            <div class="px-3 py-6">
+                <!-- back button -->
+                <a href="{% url 'login' %}"
+                   class="link-muted position-absolute top-0 start-0 p-2 d-inline-grid gap-auto-2">
+                    <svg class="rtl-flip" height="18px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"
+                         fill="currentColor">
+                        <path fill-rule="evenodd"
+                              d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"></path>
+                    </svg>
+                    <span>登录</span>
+                </a>
+                <div class="row">
+                    <div class="col-sm-8 col-md-6 col-lg-9 col-xl-12 mx-auto max-w-450">
+
+                        <h1 class="fw-bold mb-5">注册</h1>
+
+                        <form novalidate id="signup-form" method="post" action="{% url 'signup' %}" class="bs-validate">
+                            {% csrf_token %}
+                            <div class="row g-3 mb-3">
+                                <div class="col-xl-6">
+                                    <div class="form-floating">
+                                        <input required placeholder="昵称" id="signup-nickname"
+                                               name="nickname" type="text" class="form-control form-control-lg"
+                                               data-rule="required:true" value="张三">
+                                        <label for="account_first_name">昵称</label>
+                                        <div class="invalid-feedback" id="signup-nickname-err">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-6">
+                                    <select class="js-ajax form-select-lg form-select mb-3" name="gender"
+                                            id="signup-gender">
+                                        <option value="0" selected>男</option>
+                                        <option value="1">女</option>
+                                    </select>
+                                </div>
+
+                            </div>
+
+                            <div class="form-floating mb-3">
+                                <input required placeholder="Email" id="signup-username" name="username" type="email"
+                                       class="form-control" data-rule='required:true|regular:"email"'
+                                       value="238@qq.com">
+                                <label for="account_email">邮箱</label>
+                                <div class="invalid-feedback" id="signup-username-err">
+                                </div>
+                            </div>
+
+                            <div class="input-group-over">
+                                <div class="form-floating mb-3">
+                                    <input required placeholder="Password" id="signup-password1" type="password"
+                                           class="form-control" name="password1" data-rule='required:true'
+                                           value="a123">
+                                    <label for="account_password">密码</label>
+                                    <div class="invalid-feedback" id="signup-password1-err">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="input-group-over">
+                                <div class="form-floating mb-3">
+                                    <input required placeholder="Password" id="signup-password2" type="password"
+                                           class="form-control" name="password2" data-rule='required:true'
+                                           value="a123">
+                                    <label for="account_password">重复密码</label>
+                                    <div class="invalid-feedback" id="signup-password2-err">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- submot button -->
+                            <div class="d-grid mb-4">
+                                <button type="submit" class="btn btn-primary">
+                                    <span>注册</span>
+                                    <svg class="rtl-flip" width="18px" height="18px" viewBox="0 0 16 16"
+                                         xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+                                        <path fill-rule="evenodd"
+                                              d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"></path>
+                                    </svg>
+                                </button>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="d-none d-lg-block min-vh-100 col-lg-6 bg-cover py-8 overlay-dark overlay-opacity-25"
+             style="background-image:url({% static 'smarty/images/login.jpg' %})">
+            <svg class="d-none d-lg-block position-absolute h-100 top-0 text-white ms-n5" style="width:6rem"
+                 fill="currentColor" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <polygon points="50,0 100,0 50,100 0,100"></polygon>
+            </svg>
+        </div>
+    </div>
+{% endblock %}
+{% block Footer %}
+
+{% endblock %}
+{% block Script %}
+    {{ block.super }}
+    <script src="{% static 'js/form_validate.js' %}"></script>
+    <script>
+
+    </script>
+
+{% endblock %}
+
+
+
+
+

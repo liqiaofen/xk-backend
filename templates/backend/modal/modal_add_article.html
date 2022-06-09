@@ -1,0 +1,73 @@
+<div class="modal fade" id="modalAddArticle" data-bs-backdrop="static" data-bs-keyboard="true"
+     tabindex="-1" aria-labelledby="fm__fileTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <form class="modal-content form-validate" id="article-form">
+            <div class="modal-header border-0">
+                <h5 class="modal-title" id="fm__fileTitle">新建文章</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <div class="form-floating mb-3">
+                    <input required type="text" class="form-control" id="article-folder" name="folder"
+                           placeholder="folder path" value="{{ current_path }}">
+                    <label>路径</label>
+                    <div class="invalid-feedback" id="article-folder-err"></div>
+                </div>
+                <div class="form-floating mb-3">
+                    <input data-rule='required:true|maxlength:50'
+                           type="text" class="form-control" placeholder=" "
+                           id="article-title" value="" name="title">
+                    <label for="">标题</label>
+                    <div class="invalid-feedback" id="article-title-err">
+                    </div>
+                </div>
+
+                <textarea class="form-control" rows="4" placeholder="描述" id="article-description"
+                          name="description"></textarea>
+
+            </div>
+            <div class="modal-footer border-0">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" onclick="submitAddArticle()">
+                    <i>
+                        <svg width="18px" height="18px" xmlns="http://www.w3.org/2000/svg"
+                             fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M5 13l4 4L19 7"></path>
+                        </svg>
+                    </i>
+                    <span>保存</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    function submitAddArticle() {
+        if (!ajax_validate('article')) {
+            return
+        }
+        var forms = document.getElementById('article-form')
+        var formData = new FormData(forms);
+        $.ajax({
+            url: "{% url 'api-articles:article-list' %}",
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (res) {
+                console.log(res)
+                $.SOW.core.toast.show('success', '', '新建成功', 'top-center', 10000, true);
+                $('#modalAddArticle').modal('hide') // 隐藏model
+                forms.reset()
+                location.reload() // 刷新当前页面
+            },
+            error: function (jqXHR) {
+                ajax_error(jqXHR, 'article')
+            }
+        })
+    }
+</script>

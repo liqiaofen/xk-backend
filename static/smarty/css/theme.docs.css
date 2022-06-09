@@ -1,0 +1,110 @@
+.doc-page-title {
+  display: block;
+  /*padding-bottom: 1.5rem!important;*/
+  /*border-bottom: 2px solid #dde4ea!important;*/
+  /*border-bottom:  1px solid #eaeff7;*/
+  border-bottom:  1px solid #f8f9fa;
+  /*box-shadow: 0 6px 12px rgba(140,152,164,.075);*/
+  /*background-color: var(--bs-gray-200);*/
+}
+
+.container-doc { 
+  max-width: 1200px;
+  margin-bottom: 5rem; 
+}
+.doc-page-title p,
+.doc-page-title .container-doc {
+  margin-bottom: 0 !important;
+}
+
+
+
+
+/*
+  
+  Anchor JS
+  Injected links
+
+    <h2 data-anchor="anchor-id">
+      Lorem Ipsum
+    </h2>
+
+*/
+.anchor-js-link {
+  font-weight: 400;
+  color: rgba(13,110,253,0.5);
+  transition: color 0.15s ease-in-out;
+  text-decoration: none;
+  opacity: 0;
+}
+  .doc-anchor:hover > .anchor-js-link {
+    opacity: 1;
+  }
+.anchor-js-link::after {
+    content: "#";
+}
+
+
+
+/*
+  
+  Icons
+
+*/
+.doc-icon-preview {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  padding: 24px 0;
+  margin: 0;
+}
+  .doc-icon-preview > li {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 160px;
+    height: 160px;
+    padding: 0 0 1rem;
+    text-align: center;
+    border-radius: .25em;
+    transition: background 0.2s;
+  }
+    .doc-icon-preview > li:hover {
+      background-color: #f1f4f8;
+    }
+  /* icon name */
+  .doc-icon-preview p {
+    font-size: .85rem;
+    color: rgba(0,0,0,0.6);
+    margin: 0;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    bottom: 1.1rem;
+    white-space: nowrap;
+    padding: 0 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  /* inner options */
+  .doc-icon-preview .icon-opt {
+    display: none;
+    position: absolute;
+    margin-top: 1em;
+    top:0;
+  }
+    .doc-icon-preview > li:hover {
+      color: #ffc41d;
+    }
+    .doc-icon-preview > li:hover .icon-opt {
+      display: block;
+    }
+  .doc-icon-preview .icon-opt > a {
+    text-decoration: none;
+    font-size: .8rem;
+    border-radius: 4px !important;
+    margin: 0 .3em .3em .3em;
+    padding: .4em .7em !important;
+  }

@@ -1,0 +1,85 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+{% block cssLink %}
+    <link rel="stylesheet" href="{% static 'editormd/css/editormd.preview.css' %}"/>
+{% endblock %}
+{% block Content %}
+
+    <!-- start :: help center -->
+    <div class="container py-5">
+
+        <div class="col-12 col-lg-10 offset-lg-1">
+
+            <div class="p-4 p-xl-5 shadow-xs bg-white rounded">
+
+                <div class="border-bottom pb-3 mb-5">
+
+                    <h1 class="h2 fw-bold">{{ article.title }}</h1>
+
+                </div>
+
+                <div class="article-format">
+
+                    <div id="test-editormd" style="">
+                        <textarea style="display: none">{{ article.content }}</textarea>
+                    </div>
+
+                    <p class="border-top py-3 m-0 text-muted small">
+                        Last Update: {{ article.modified }}
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="px-4 py-5 mt-3 bg-white text-center rounded shadow-xs">
+
+                <h3 class="h5 text-primary mb-4 fw-normal">
+                    你喜欢这篇文章吗？
+                </h3>
+
+                <p id="feedback_thankyou" class="mb-1 text-success hide">
+                    Thanks for your feedback!
+                </p>
+
+                <a id="vote_yes" class="btn-toggle btn rounded-circle btn-primary">
+                    <i class="fi fi-like"></i>
+                </a>
+
+                <a id="vote_no" class="btn-toggle btn rounded-circle btn-primary">
+                    <i class="fi fi-dislike"></i>
+                </a>
+
+            </div>
+            <!-- /VOTING -->
+        </div>
+
+    </div>
+    <!-- end :: help center -->
+{% endblock %}
+{% block javaScripts %}
+    {{ block.super }}
+    <script src="{% static 'editormd/js/editormd.js' %}"></script>
+    <script src="{% static 'editormd/js/jquery.min.js' %}"></script>
+    <script src="{% static 'editormd/js/lib/marked.min.js' %}"></script>
+    <script src="{% static 'editormd/js/lib/prettify.min.js' %}"></script>
+
+    <script src="{% static 'editormd/js/lib/raphael.min.js' %}"></script>
+    <script src="{% static 'editormd/js/lib/underscore.min.js' %}"></script>
+    <script src="{% static 'editormd/js/lib/sequence-diagram.min.js' %}"></script>
+    <script src="{% static 'editormd/js/lib/flowchart.min.js' %}"></script>
+    <script src="{% static 'editormd/js/lib/jquery.flowchart.min.js' %}"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            var editor = editormd.markdownToHTML("test-editormd", {
+                htmlDecode: "style,script,iframe",  // you can filter tags decode
+                emoji: true,
+                taskList: true,
+                tex: true,  // 默认不解析
+                flowChart: true,  // 默认不解析
+                sequenceDiagram: true,  // 默认不解析
+            });
+        });
+    </script>
+{% endblock %}

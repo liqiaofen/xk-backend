@@ -1,0 +1,79 @@
+{% load system_tags %}
+<!-- pagination -->
+<nav class="w-100 text-center" aria-label="Pagination">
+
+    <!-- pagination : 桌面模式 -->
+    {% if is_paginated %}
+        <nav class="text-center float-md-end mt-3 mt-md-0 d-none d-md-flex"
+             aria-label="Pagination">
+            <ul class="nav nav-sm nav-invert">
+                {% if page_obj.has_previous %}
+                    <li class="nav-item">
+                        <a class="nav-link px-3 px-3"
+                           href="?{% query_transform page=page_obj.previous_page_number %}"
+                           tabindex="-1">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                {% endif %}
+
+                {% for page in page_obj.pages %}
+                    {% if page %}
+                        <li class="nav-item">
+                            {% ifequal page page_obj.number %}
+                                <a class="nav-link px-3 active">{{ page }}</a>
+                            {% else %}
+                                <a class="nav-link px-3"
+                                   href="?{% query_transform page=page %}">{{ page }}</a>
+                            {% endifequal %}
+                        </li>
+                    {% else %}
+                        <li class="nav-item"><a class="nav-link px-3">...</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+                {% if page_obj.has_next %}
+                    <li class="nav-item">
+                        <a class="nav-link px-3 px-3"
+                           href="?{% query_transform page=page_obj.next_page_number %}">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                {% endif %}
+
+            </ul>
+        </nav>
+    {% endif %}
+    <!-- pagination : 手机模式 -->
+    <ul class="list-inline mb-0 d-md-none">
+        <li class="list-inline-item">
+            <a href="?{% query_transform page=page_obj.previous_page_number %}"
+               class="btn btn-sm rounded-circle link-normal {% if not page_obj.has_previous %}
+            disabled
+            {% endif %} " tabindex="0">
+                <svg width="24px" height="24px" xmlns="http://www.w3.org/2000/svg" fill="none"
+                     viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M15 19l-7-7 7-7"></path>
+                </svg>
+            </a>
+        </li>
+        <li class="list-inline-item">
+            <a href="?{% query_transform page=page_obj.next_page_number %}"
+               class="btn btn-sm rounded-circle link-normal {% if not page_obj.has_next %}
+            disabled
+            {% endif %} " tabindex="0">
+                <svg width="24px" height="24px" xmlns="http://www.w3.org/2000/svg" fill="none"
+                     viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M9 5l7 7-7 7"></path>
+                </svg>
+            </a>
+        </li>
+    </ul>
+    <div class="text-muted small d-md-none" id="mobile-page-info" role="status"
+         aria-live="polite">
+        Showing results {{ page_obj.result_range.0 }} to {{ page_obj.result_range.1 }} of {{ paginator.count }}
+    </div>
+
+</nav>

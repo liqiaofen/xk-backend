@@ -1,0 +1,52 @@
+default:
+  SECRET_KEY: 'django-insecure-g*m*_$28*#xkkt+fvh^u6f*n3e0c=b)gz@80%vdk3=)mbc!=4b'
+  BASE_URL: http://127.0.0.1:8200
+  ALLOWED_HOSTS:
+    - "*"
+  # S3 - 文章
+  # https://blog.devgenius.io/django-digitalocean-spaces-a12b4a053628
+  # https://note.qidong.name/2019/07/django-storages-s3/
+  # https://coderbook.com/@marcus/how-to-store-django-static-and-media-files-on-s3-in-production/
+  # ERROR - 字体文件：Access-Control-Allow-Origin 解决：数据桶:安全管理->跨域访问CORS设置
+  # https://stackoverflow.com/questions/70789352/django-font-awesome-problem-with-access-control-allow-origin?newreg=4af482dc8899405f920e078edb6eec51
+  AWS_ACCESS_KEY_ID:
+  AWS_SECRET_ACCESS_KEY:
+  AWS_STORAGE_BUCKET_NAME:
+  AWS_S3_REGION_NAME:
+  # 是您的应用程序用来提供文件的 URL.
+  AWS_S3_CUSTOM_DOMAIN: '@format {this.AWS_STORAGE_BUCKET_NAME}.cos.{this.AWS_S3_REGION_NAME}.myqcloud.com'  # 将 S3 用作 CDN
+  # 是 Django 将用于与您的存储进行通信的端点。这不一定是您需要用来在 HTML 中显示文件的端点。
+  AWS_S3_ENDPOINT_URL: '@format https://cos.{this.AWS_S3_REGION_NAME}.myqcloud.com'  # 连接到 S3 时使用的自定义 S3 URL，
+  #  AWS_IS_GZIPPED: True
+  #  AWS_S3_OBJECT_PARAMETERS:
+  #    CacheControl: 'max-age=86400'
+  AWS_LOCATION: 'static'  # 将添加到所有上传的路径前缀
+  #  STATIC_URL: '@format https://{this.AWS_S3_CUSTOM_DOMAIN}/{this.AWS_LOCATION}/'
+  #  STATICFILES_STORAGE: 'storages.backends.s3boto3.S3Boto3Storage'  # 允许自动将静态文件放入存储桶中
+  # DEFAULT_FILE_STORAGE: 'XUEKE.storage_backends.MediaStorage'
+  # alicdn iconfont
+  ALICDN_ICONFONT: 'https://at.alicdn.com/t/font_3279671_j2x5m002iai.json?spm=a313x.7781069.1998910419.92&file=font_3279671_j2x5m002iai.json'
+
+  # redis
+  REDIS_HOST: localhost
+  REDIS_PORT: 6379
+
+  # entrypoint.sh 中验证Postgres是否健康
+  DATABASE: postgres  
+  SQL_DB: db
+  SQL_PORT: 5432
+
+
+  # Database
+  DATABASES:
+    default:
+      ENGINE: django.db.backends.postgresql
+      HOST: "@format {this.SQL_DB}"  # 容器名称
+      PORT: "@format {this.SQL_PORT}"
+      NAME: xueke
+      USER: postgres
+      PASSWORD: liu*963.
+
+# development:
+
+  

@@ -1,0 +1,59 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+{% block Content %}
+    <!-- PAGE TITLE -->
+    <div class="section pb-4 pt-5">
+        <div class="container">
+            <div class="col-12 col-lg-10 offset-lg-1">
+
+                {#                <nav aria-label="breadcrumb">#}
+                {#                    <ol class="breadcrumb small">#}
+                {#                        <li class="breadcrumb-item"><a href="help-center-2-index.html">Help Center 2</a></li>#}
+                {#                        <li class="breadcrumb-item active" aria-current="page">Help Category</li>#}
+                {#                    </ol>#}
+                {#                </nav>#}
+
+                <h1 class="h2 fw-bold">文章列表</h1>
+
+            </div>
+        </div>
+    </div>
+    <!-- /PAGE TITLE -->
+
+    <!-- start :: help center -->
+    <div class="section py-4 mb-5">
+        <div class="container">
+
+            <div class="bg-white rounded shadow-xs p-4 px-lg-5 col-lg-10 offset-lg-1">
+
+                {% for article in articles %}
+                    <a href="{% url 'front-article:article-detail' article.id %}"
+                       class="d-block border-bottom text-decoration-none text-dark transition-hover-top transition-all-ease-250 py-4">
+
+                        <h3 class="text-primary fs-5">{{ article.title }}</h3>
+                        <p>
+                            {{ article.abstract }}
+                        </p>
+                        <p>
+                            {% for tag in article.tags.all %}
+                                <span class="badge rounded-pill bg-secondary-soft"># {{ tag.name }}</span>
+                            {% endfor %}
+                        </p>
+                    </a>
+                {% endfor %}
+
+                <!-- pagination : center -->
+                <nav class="text-center my-3" aria-label="Pagination">
+                    {% block pagination %}
+                        {% include 'pagination2.html' %}
+                    {% endblock %}
+                </nav>
+                <!-- /pagination : center -->
+
+
+            </div>
+
+        </div>
+    </div>
+    <!-- end :: help center -->
+{% endblock %}

@@ -1,0 +1,755 @@
+{% extends 'backend/home-list.html' %}
+{% load static %}
+{% block Link %}
+    <!-- One of the following themes -->
+    <link rel="stylesheet" href="{% static 'pickr/themes/classic.min.css' %}"/>
+    <!-- 'classic' theme -->
+    <link rel="stylesheet" href="{% static 'pickr/themes/monolith.min.css' %}"/>
+    <!-- 'monolith' theme -->
+    <link rel="stylesheet" href="{% static 'pickr/themes/nano.min.css' %}"/>
+    <!-- 'nano' theme -->
+
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_3279671_bkhbbgwtehr.css">
+    <style>
+        .icon_lists {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            padding-left: 0;
+        }
+
+
+        .icon_lists li {
+            width: 50px;
+            text-align: center;
+            list-style: none !important;
+            cursor: default;
+        }
+
+
+        .icon_lists .icon {
+            display: block;
+            height: 50px;
+            font-size: 25px;
+            color: #333;
+            -webkit-transition: font-size 0.25s linear, width 0.25s linear;
+            -moz-transition: font-size 0.25s linear, width 0.25s linear;
+            transition: font-size 0.25s linear, width 0.25s linear;
+        }
+
+        .icon_lists .icon:hover {
+            font-size: 40px;
+        }
+
+        .icon_lists .svg-icon {
+            /* 通过设置 font-size 来改变图标大小 */
+            width: 1em;
+            /* 图标和文字相邻时，垂直对齐 */
+            vertical-align: -0.15em;
+            /* 通过设置 color 来改变 SVG 的颜色/fill */
+            fill: currentColor;
+            /* path 和 stroke 溢出 viewBox 部分在 IE 下会显示
+                normalize.css 中也包含这行 */
+            overflow: hidden;
+        }
+
+        .icon_lists li .name {
+            color: #666;
+            letter-spacing: 1px;
+            font-size: 9px;
+        }
+
+
+    </style>
+{% endblock %}
+{% block tableFilter %}
+    <div class="card-header p-4">
+
+        <div class="row g-3">
+
+            <!-- product filter -->
+            <div class="order-2 order-md-1 col">
+                {#                <form method="get" class="position-relative d-flex align-items-center">#}
+
+                <!-- search icon -->
+                <svg class="z-index-1 position-absolute start-0 ms-3 text-primary" width="18px"
+                     height="18px"
+                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor"
+                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+
+                <div class="dropdown w-100">
+                    <input type="text"
+                           class="dropdown-toggle form-control form-control-sm border-0 shadow-none ps-5 bg-gray-100"
+                           data-bs-toggle="dropdown" data-bs-auto-close="outside"
+                           placeholder="Product title / SKU">
+
+                    <!--
+                      .dropdown-mega-sm
+                      .dropdown-mega-md
+                      .dropdown-mega-lg
+                      .dropdown-mega-xl
+                    -->
+                    <div class="dropdown-menu dropdown-mega-lg shadow-lg p-4 mt-1">
+                        <h6 class="mb-4">Filter products</h6>
+
+                        <div class="row g-3 mb-3">
+                            <div class="col-lg-6">
+
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" id="filter-category" aria-label="Category">
+                                        <option value="" selected>Any</option>
+                                        <option value="1">Shoes</option>
+                                        <option value="2">Men tshirt</option>
+                                        <option value="3">Women thisrt</option>
+                                    </select>
+                                    <label for="filter-category">Category</label>
+                                </div>
+
+                            </div>
+                            <div class="col-lg-6">
+
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" id="filter-brand" aria-label="Brand">
+                                        <option value="" selected>Any</option>
+                                        <option value="1">Nike</option>
+                                        <option value="2">Adidas</option>
+                                        <option value="3">Loreal</option>
+                                    </select>
+                                    <label for="filter-brand">Brand</label>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <div class="form-check d-block d-sm-inline-block me-2 mb-2">
+                                <input class="form-check-input form-check-input-primary" type="checkbox"
+                                       value="1" id="filter-saleprice">
+                                <label class="form-check-label user-select-none" for="filter-saleprice">
+                                    Sale price
+                                </label>
+                            </div>
+
+                            <div class="form-check d-block d-sm-inline-block me-2 mb-2">
+                                <input class="form-check-input form-check-input-primary" type="checkbox"
+                                       value="1" id="filter-preorder">
+                                <label class="form-check-label user-select-none" for="filter-preorder">
+                                    Allow preorders
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-between mt-4">
+                            <button type="submit" class="btn btn-sm btn-primary">Apply filter</button>
+                            <a href="#!" class="btn btn-sm btn-danger btn-soft float-end">Reset</a>
+                        </div>
+
+                    </div>
+                </div>
+
+                {#                </form>#}
+            </div>
+
+            <!-- options -->
+            <div class="order-1 order-md-2 col-md-auto">
+                <div class="btn-group w-100" role="group" aria-label="Product options">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#modalImportBill">
+                        导入账单
+                    </button>
+                    {% include 'backend/modal/modal_import_bill.html' %}
+                    <a href="#!" role="button" class="btn btn-sm small btn-secondary">导出账单</a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- active filters -->
+        <ul class="list-inline mt-2 mb-0">
+            <li class="list-inline-item badge bg-primary me-1">
+                <a href="#!" class="text-white text-decoration-none d-flex align-items-center">
+                    <svg width="18px" height="18px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"
+                         fill="currentColor">
+                        <path fill-rule="evenodd"
+                              d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"></path>
+                    </svg>
+                    <span class="text-white ms-1">Filters:</span>
+                </a>
+            </li>
+            <li class="list-inline-item me-1">
+                <a href="#!" class="badge bg-light link-muted d-inline-grid gap-auto-1">
+                    <svg width="18px" height="18px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"
+                         fill="currentColor">
+                        <path fill-rule="evenodd"
+                              d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"></path>
+                    </svg>
+                    <span class="text-muted">Category</span>
+                </a>
+            </li>
+            <li class="list-inline-item me-1">
+                <a href="#!" class="badge bg-light link-muted d-inline-grid gap-auto-1">
+                    <svg width="18px" height="18px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"
+                         fill="currentColor">
+                        <path fill-rule="evenodd"
+                              d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"></path>
+                    </svg>
+                    <span class="text-muted">Brand</span>
+                </a>
+            </li>
+            <li class="list-inline-item me-1">
+                <a href="#!" class="badge bg-light link-muted d-inline-grid gap-auto-1">
+                    <svg width="18px" height="18px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"
+                         fill="currentColor">
+                        <path fill-rule="evenodd"
+                              d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"></path>
+                    </svg>
+                    <span class="text-muted">Sale</span>
+                </a>
+            </li>
+            <li class="list-inline-item me-1">
+                <a href="#!" class="badge bg-light link-muted d-inline-grid gap-auto-1">
+                    <svg width="18px" height="18px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"
+                         fill="currentColor">
+                        <path fill-rule="evenodd"
+                              d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"></path>
+                    </svg>
+                    <span class="text-muted">Preorder</span>
+                </a>
+            </li>
+        </ul>
+
+    </div>
+{% endblock %}
+{% block tableItem %}
+    <div class="table-responsive-md">
+
+        <table class="table table-align-middle" role="grid" aria-describedby="mobile-page-info">
+            <thead>
+            <tr>
+                <th scope="col" style="width:46px">
+                    <div class="form-check"><!-- check all -->
+                        <input data-checkall-container="#checkall-list" class="form-check-input" type="checkbox"
+                               value="1">
+                    </div>
+                </th>
+                <th scope="col" class="small text-muted">序号</th>
+                <th scope="col" class="small text-muted">类型</th>
+                <th scope="col" class="small text-muted">支付方式</th>
+                <th scope="col" class="small text-muted">支付金额</th>
+
+                <th scope="col" class="small text-muted text-center">
+                    <a href="#!" class="d-flex link-muted" title="order by inventory"
+                       aria-label="order by inventory">
+                          <span class="d-flex flex-column lh-1">
+                            <svg class="lh-1 text-primary" width="13px" height="13px" xmlns="http://www.w3.org/2000/svg"
+                                 fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 15l7-7 7 7"></path>
+                            </svg>
+
+                            <svg class="lh-1 mt-n1 text-muted" width="13px" height="13px"
+                                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                 stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                          </span>
+                        <span class="ms-2">消费者</span>
+                    </a>
+                </th>
+                <th scope="col" class="small text-muted">
+                    <a href="#!" class="d-flex link-muted" title="order by price" aria-label="order by price">
+                          <span class="d-flex flex-column lh-1">
+                            <svg class="lh-1 text-primary" width="13px" height="13px" xmlns="http://www.w3.org/2000/svg"
+                                 fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 15l7-7 7 7"></path>
+                            </svg>
+
+                            <svg class="lh-1 mt-n1 text-muted" width="13px" height="13px"
+                                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                 stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                          </span>
+                        <span class="ms-2">支付时间</span>
+                    </a>
+                </th>
+                <th scope="col" class="small text-muted">消费地址</th>
+                <th scope="col" class="small text-muted">备注</th>
+                <th scope="col" class="small text-muted"><!-- options --></th>
+            </tr>
+            </thead>
+            <tbody id="checkall-list">
+            <!-- item -->
+            {% for expense in expenses %}
+                <tr>
+                    <th scope="row"><!-- check -->
+                        <div class="form-check"><!-- item -->
+                            <input class="form-check-input form-check-input-primary" type="checkbox" value="">
+                        </div>
+                    </th>
+                    <td>
+                        {{ forloop.counter }}
+                    </td>
+                    <td>
+                        {{ expense.get_pay_type_display }}
+                    </td>
+                    <td>
+                        {{ expense.get_pay_way_display }}
+                    </td>
+                    <td>
+                        {{ expense.amount }}
+                    </td>
+                    <td>
+                        {{ expense.created_by }}
+                    </td>
+                    <td>
+                        {{ expense.pay_date|date:"m-d-Y" }}
+                    </td>
+                    <td>
+                        {{ expense.addr.name }}
+                    </td>
+                    <td>
+                        {{ expense.note }}
+                    </td>
+                    <td class="dropstart"><!-- options -->
+                        <a class="btn btn-sm btn-light btn-icon btn-ghost text-muted rounded-circle dropdown-toggle"
+                           href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+                           data-bs-offset="0,0">
+                                  <span class="group-icon">
+                                    <svg height="18px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"
+                                         fill="currentColor"><path fill-rule="evenodd"
+                                                                   d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"></path></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18px" height="18px"
+                                         viewBox="0 0 24 24"
+                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                         stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6"
+                                                                                                                  y1="6"
+                                                                                                                  x2="18"
+                                                                                                                  y2="18"></line></svg>
+                                  </span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-clean">
+                            <li>
+                                <a class="dropdown-item" href="#">
+                                    <svg class="text-muted" width="18px" height="18px"
+                                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                         stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                         stroke-linejoin="round">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                        <circle cx="12" cy="12" r="3"></circle>
+                                    </svg>
+                                    <span>Preview</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">
+                                    <svg class="text-muted" width="18px" height="18px"
+                                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                         stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                         stroke-linejoin="round">
+                                        <path d="M12 20h9"></path>
+                                        <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                                    </svg>
+                                    <span>Edit</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">
+                                    <svg class="text-muted" width="18px" height="18px"
+                                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                         stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                         stroke-linejoin="round">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg>
+                                    <span>Set active</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">
+                                    <svg class="text-muted" width="18px" height="18px"
+                                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                         stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                         stroke-linejoin="round">
+                                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                                    </svg>
+                                    <span>Set inactive</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">
+                                    <svg class="text-muted" width="18px" height="18px"
+                                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                         stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                         stroke-linejoin="round">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <line x1="15" y1="9" x2="9" y2="15"></line>
+                                        <line x1="9" y1="9" x2="15" y2="15"></line>
+                                    </svg>
+                                    <span>Set unavailable</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">
+                                    <svg class="text-danger" width="18px" height="18px"
+                                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                         stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                         stroke-linejoin="round">
+                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                        <line x1="10" y1="11" x2="10" y2="17"></line>
+                                        <line x1="14" y1="11" x2="14" y2="17"></line>
+                                    </svg>
+                                    <span class="w-100">Delete</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            {% endfor %}
+            <!-- end item -->
+            </tbody>
+        </table>
+
+    </div>
+{% endblock %}
+{% block selectedItems %}
+
+{% endblock %}
+
+{% block Widgets %}
+    <div class="row g-3">
+
+        <!-- 收入 -->
+        {% for pay_type, categories in pay_categories.items %}
+            <div class="col-12 col-xl-4">
+
+                <div class="portlet">
+
+                    <div class="portlet-header">
+                        <div class="float-end">
+                            <button type="button" onclick="addPayCategory({{ pay_type }})"
+                                    class="btn rounded-pill btn-sm btn-primary transition-hover-top mb-1"
+                                    data-bs-toggle="modal" data-bs-target="#modalPayCategory">添加
+                            </button>
+                        </div>
+                        <span class="d-block text-muted text-truncate fw-medium">
+                    {% if pay_type == '0' %}
+                        支出
+                    {% elif pay_type == '1' %}
+                        收入
+                    {% else %}
+                        转账
+                    {% endif %}
+                  </span>
+                    </div>
+
+                    <div class="portlet-body max-h-500 tab-content">
+
+                        <!-- tab 1 -->
+                        <div id="pay-category-{{ pay_type }}" class="timer-countdown timer-countdown-inline small">
+                            {% for category in categories %}
+                                <span data-id="{{ category.id }}"
+                                      data-color="{{ category.color }}"
+                                      data-name="{{ category.name }}"
+                                      data-pay_type="{{ category.pay_type }}"
+                                      data-icon="{{ category.icon }}"
+                                      onclick="editPayCategory(this)"
+                                      class="bg-white shadow rounded p-2 m-1 text-center d-inline-block">
+                                    <span class="icon iconfont icon-{{ category.icon }} fs-3"
+                                          style="color: {{ category.color }};"></span>
+                                    <div class="smaller text-muted">{{ category.name }}</div>
+                                </span>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        {% endfor %}
+        <!-- /收入 -->
+
+
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="modalPayCategory" data-bs-keyboard="false" tabindex="-1"
+         aria-labelledby="modalPayCategoryLabel" aria-hidden="false">
+        <div class="modal-dialog  modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalPayCategoryLabel">新建 - 消费类别</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body row">
+                    <div class="col-12 col-xl-6 fs-16">
+                        <div class="text-center">
+                            <span id="categoryIcon" class="icon iconfont icon-{{ ali_icons.glyphs.0.font_class }}"
+                                  style="color: #249af5;font-size: 10rem;"></span>
+                        </div>
+                        <div id="fulscreen-demo" class="rounded p-3">
+                            <div class="d-flex align-items-center justify-content-lg-between">
+                                <h5 class="mb-0">选择更多图标</h5>
+                                <!-- toggle fullscreen -->
+                                <a href="#" class="btn-toggle" data-toggle-container-class="fullscreen"
+                                   data-toggle-body-class="overflow-hidden" data-target="#fulscreen-demo">
+                                      <span class="group-icon">
+                                        <i class="fi fi-expand" onclick="fullscreen('expand')"></i>
+                                        <i class="fi fi-shrink" onclick="fullscreen('shrink')"></i>
+                                        </span>
+                                </a>
+                            </div>
+                            <hr class="my-3">
+
+                            <div id="container-icon">
+                                <ul id="shrink-screen-icon" class="icon_lists dib-box ">
+
+                                    {% for icon in ali_icons.glyphs|slice:":6" %}
+                                        <li onclick="selectIcon('{{ icon.font_class }}')">
+                                            <span class="icon iconfont icon-{{ icon.font_class }}"></span>
+                                            <div class="name">{{ icon.name }}</div>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                                <ul id="expand-screen-icon" hidden class="icon_lists dib-box">
+
+                                    {% for icon in ali_icons.glyphs %}
+                                        <li class="">
+                                            <span class="icon iconfont icon-{{ icon.font_class }}"></span>
+                                            <div class="name">{{ icon.name }}</div>
+                                        </li>
+                                    {% endfor %}
+
+
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-12  col-xl-6">
+                        <form id="paycategory-form">
+                            <input hidden name="icon" value="{{ ali_icons.glyphs.0.font_class }}" id="paycategory-icon"
+                                   class="form-control mb-3" placeholder="图标">
+                            <div class="form-floating mb-3">
+                                <select id="paycategory-pay_type" name="pay_type" class="form-select">
+                                    <option value="0">支出</option>
+                                    <option value="1">收入</option>
+                                    <option value="2">转账</option>
+                                </select>
+                                <label for="floatingInput">类型</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input name="name" class="form-control" id="paycategory-name"
+                                       data-rule="required:true|maxlength:5" placeholder="名称">
+                                <label for="floatingInput">名称<span class="text-danger">*</span></label>
+                                <div class="invalid-feedback" id="paycategory-name-err">
+                                </div>
+                            </div>
+                            <input hidden name="color" value="#249af5" id="paycategory-color" placeholder="颜色">
+                            {#  颜色选择器 #}
+                            <input placeholder="颜色选择器" class="form-control mb-3 color-picker">
+                            <button type="button" onclick="payCategorySave()"
+                                    class="btn btn-primary mt-3">完成
+                            </button>
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javaScripts %}
+    {{ block.super }}
+    <!-- Modern or es5 bundle -->
+    <script src="{% static 'pickr/pickr.min.js' %}"></script>
+    <script src="{% static 'pickr/pickr.es5.min.js' %}"></script>
+    <script src="{% static 'js/form_validate.js' %}"></script>
+    <script>
+
+        {#颜色分类#}
+        // Simple example, see optional options for more configuration.
+        const pickr = Pickr.create({
+            el: '.color-picker',
+            theme: 'classic', // or 'monolith', or 'nano'
+            default: '#249af5',
+            swatches: [
+                'rgba(244, 67, 54, 1)',
+                'rgba(233, 30, 99, 0.95)',
+                'rgba(156, 39, 176, 0.9)',
+                'rgba(103, 58, 183, 0.85)',
+                'rgba(63, 81, 181, 0.8)',
+                'rgba(33, 150, 243, 0.75)',
+                'rgba(3, 169, 244, 0.7)',
+                'rgba(0, 188, 212, 0.7)',
+                'rgba(0, 150, 136, 0.75)',
+                'rgba(76, 175, 80, 0.8)',
+                'rgba(139, 195, 74, 0.85)',
+                'rgba(205, 220, 57, 0.9)',
+                'rgba(255, 235, 59, 0.95)',
+                'rgba(255, 193, 7, 1)'
+            ],
+
+            components: {
+
+                // Main components
+                preview: true,
+                opacity: true,
+                hue: true,
+
+                // Input / output Options
+                interaction: {}
+            }
+        });
+        pickr.on('change', (color, source, instance) => {
+            const hexa_color = pickr.getColor().toHEXA().toString()
+            $("#categoryIcon").css("color", hexa_color);
+            $("#paycategory-color").val(hexa_color);
+            pickr.applyColor(true);
+        })
+
+        const el_0 = document.getElementById('pay-category-0');
+        const el_1 = document.getElementById('pay-category-1');
+        const el_2 = document.getElementById('pay-category-2');
+        let EDIT_PAY_CATEGORY_ID = null
+        var ops = {
+            animation: 1000,
+
+            //拖动结束
+            onEnd: function (evt) {
+                {#console.log(evt);#}
+                //获取拖动后的排序
+                {#console.log(evt.oldDraggableIndex, evt.newDraggableIndex, evt.item.dataset.id)#}
+                {#console.log("你正在拖动：" + evt.dragged.dataset.id + ",替换了：" + evt.related.dataset.id);#}
+                {#console.log("B组排序结果：" + JSON.stringify(sortable.toArray()))#}
+                //}
+
+                $.ajax({
+                    url: "{% url 'api-expense:expense-category-move' 0 %}".replace(/0/, evt.item.dataset.id),
+                    type: "POST",
+                    data: JSON.stringify({'sort': evt.newDraggableIndex}),
+                    contentType: 'application/json;charset=UTF-8', //contentType很重要
+                    dataType: 'json',
+                    success: function (res) {
+                        {#console.log(res)#}
+                    },
+                    error: function (jqXHR) {
+                        ajax_error(jqXHR)
+                    }
+                })
+
+            },
+        };
+        //初始化
+        var sortable0 = Sortable.create(el_0, ops);
+        var sortable1 = Sortable.create(el_1, ops);
+        var sortable2 = Sortable.create(el_2, ops);
+
+        function addPayCategory(pay_type) {
+            document.getElementById('paycategory-pay_type').value = pay_type
+            document.getElementById('paycategory-name').value = ''
+            EDIT_PAY_CATEGORY_ID = null
+        }
+
+        function editPayCategory(el) {
+            console.log(el.dataset)
+            $('#modalPayCategory').modal('show')
+            document.getElementById('paycategory-pay_type').value = el.dataset.pay_type
+            document.getElementById('paycategory-name').value = el.dataset.name
+            document.getElementById('paycategory-color').value = el.dataset.color
+            document.getElementById('paycategory-icon').value = el.dataset.icon
+            pickr.setColor(el.dataset.color)
+            selectIcon(el.dataset.icon)
+            EDIT_PAY_CATEGORY_ID = el.dataset.id
+        }
+
+        // 选择更多图标
+        function fullscreen(atr) {
+            var expand_icon = document.getElementById("expand-screen-icon");
+            var shrink_icon = document.getElementById("shrink-screen-icon");
+            if (atr === 'expand') {
+                expand_icon.removeAttribute("hidden");
+                shrink_icon.setAttribute("hidden", true);
+            } else {
+                shrink_icon.removeAttribute("hidden");
+                expand_icon.setAttribute("hidden", true);
+            }
+        }
+
+        // 选择图标
+        function selectIcon(icon) {
+
+            var patt1 = new RegExp('^icon-.*$');
+            var icon_span = document.getElementById('categoryIcon')
+            icon_span.classList.forEach(function (cl) {
+                if (patt1.test(cl)) {
+                    icon_span.classList.remove(cl)
+                    icon_span.classList.add('icon-' + icon) // 替换选择的图标
+                    $("#paycategory-icon").val(icon);
+                }
+            })
+        }
+
+        {#创建 消费分类#}
+
+        function payCategorySave() {
+            console.log('------------')
+            const cur_form_inputs = $('[data-rule][id^=paycategory-]')
+            cur_form_inputs.trigger('blur')
+            let flag = Input.input_validate(cur_form_inputs)
+            if (flag) {
+                var forms = document.getElementById('paycategory-form')
+                var formData = new FormData(forms);
+                //for (var [a, b] of formData.entries()) {
+                //  console.log(a, b);
+                //}
+
+                let url = ''
+                let method = ''
+                if (EDIT_PAY_CATEGORY_ID == null) {
+                    url = "{% url 'api-expense:expense-category-list' %}"
+                    method = 'POST'
+                } else {
+                    url = "{% url 'api-expense:expense-category-detail' 0 %}".replace(/0/, EDIT_PAY_CATEGORY_ID)
+                    method = 'PUT'
+                }
+                $.ajax({
+                    url: url,
+                    type: method,
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (res) {
+                        $.SOW.core.toast.show('success', '', '操作成功', 'top-center', 10000, true);
+                        $('#paycategory-name').val(''); // name input 设置空
+                        $('#modalPayCategory').modal('hide') // 隐藏model
+                        {# 添加到指定的列表中#}
+
+                        location.reload() // 刷新当前页面
+                        {#const data = res.data#}
+                        {#var span_html = '<span data-id=' + data.id +#}
+                        {#    ' class="bg-white shadow rounded p-2 m-1 text-center d-inline-block">' +#}
+                        {#    ' <span class="iconfont icon-' + data.icon + ' fs-3" style="color: ' + data.color + ';"></span> ' +#}
+                        {#    '<div class="smaller text-muted">' + data.name + '</div>' +#}
+                        {#    '</span>'#}
+                        {#$("#pay-category-" + formData.get('pay_type')).append(span_html)#}
+                    },
+                    error: function (jqXHR) {
+                        ajax_error(jqXHR, 'paycategory')
+                    }
+                })
+            }
+        }
+
+
+    </script>
+{% endblock %}
